@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kinde - Django example</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    </head>
+    <body>
+        <header>
+            <nav class="nav container">
+                <h1 class="text-display-3">Kinde Django!</h1>
+                {% if not authenticated %}
+                <div class="js-logged-out-view">
+                    <a id="login" class="btn btn-ghost sign-in-btn" href="/kinde_login/login">
+                        Sign in
+                    </a>
+                    <a id="register" class="btn btn-dark" href="/kinde_login/register">
+                        Sign up
+                    </a>
+                </div>
+                {% else %}
+                <div class="js-logged-in-view">
+                    <div class="profile-blob">
+                        <div class="js-user-avatar avatar">
+                            {% if authenticated %}{{ user_initials }}{% endif %}
+                        </div>
+                        <div>
+                            <p class="js-user-name text-heading-2">
+                                {% if authenticated %}{{ user_full_name }}{% endif %}
+                            </p>
+                            <a id="logout" class="text-subtle" href="/kinde_login/logout">
+                                Sign out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </nav>
+        </header>
+
+        <main>
+            <div class="container">
+                {% if not authenticated %}
+                <div class="js-logged-out-view">
+                    <div class="card hero">
+                        <p class="text-display-1 hero-title">
+                            Let's start authenticating <br />
+                            with Kinde
+                        </p>
+                        <p class="text-body-1 hero-tagline">Configure your app</p>
+
+                        <a
+                            href="https://kinde.com/docs/developer-tools/python-sdk/"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="btn btn-light btn-big"
+                        >
+                            Go to docs
+                        </a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="js-logged-in-view">
+                    <div class="card start-hero">
+                        <p class="text-body-2 start-hero-intro">Woohoo!</p>
+                        <p class="text-display-2">
+                            Your authentication is all sorted.
+                            <br />
+                            Build the important stuff.
+                        </p>
+                    </div>
+                    <section class="next-steps-section">
+                        <h2 class="text-heading-1">Next steps for you</h2>
+                    </section>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <strong class="text-heading-2">Kinde</strong>
+                <p class="footer-tagline text-body-3">
+                    Visit our
+                    <a class="link" href="https://kinde.com/docs"> help center </a>
+                </p>
+
+                <small class="text-subtle"> © 2023 Kinde Django! </small>
+            </div>
+        </footer>
+    </body>
+</html>

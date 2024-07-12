@@ -14,6 +14,7 @@ This quickstart repo starts a Django application with routes setup to register a
     ```
 1. Add the callback URL and logout URL to your backend application in Kinde
 1. Run the Django app: `python manage.py runserver`
+1. Navigate to `http://localhost:8000/kinde_login` to login
 
 Note: 
 More information on the Python SDK and Django with Kinde can be found at

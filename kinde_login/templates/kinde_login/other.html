@@ -15,31 +15,14 @@
                 <h1 class="text-display-3">Kinde Django!</h1>
                 {% if not authenticated %}
                 <div class="js-logged-out-view">
-                    <a id="login" class="btn btn-ghost sign-in-btn" href="/kinde_login/login">
+                    <a id="login" class="btn btn-ghost sign-in-btn" href="/kinde_login/login?next=other">
                         Sign in
                     </a>
                     <a id="register" class="btn btn-dark" href="/kinde_login/register">
                         Sign up
                     </a>
                 </div>
-                {% else %}
-                <div class="js-logged-in-view">
-                    <div class="profile-blob">
-                        <div class="js-user-avatar avatar">
-                            {% if authenticated %}{{ user_initials }}{% endif %}
-                        </div>
-                        <div>
-                            <p class="js-user-name text-heading-2">
-                                {% if authenticated %}{{ user_full_name }}{% endif %}
-                            </p>
-                            <a id="logout" class="text-subtle" href="/kinde_login/logout">
-                                Sign out
-                            </a>
-                        </div>
-                    </div>
-                </div>
                 {% endif %}
-            </nav>
         </header>
 
         <main>
@@ -48,10 +31,10 @@
                 <div class="js-logged-out-view">
                     <div class="card hero">
                         <p class="text-display-1 hero-title">
-                            Let's start authenticating <br />
-                            with Kinde
+                            That other page
                         </p>
-                        <p class="text-body-1 hero-tagline">Configure your app</p>
+                        <p class="text-body-1 hero-tagline">Let's start authenticating <br />
+                            with Kinde</p>
 
                         <a
                             href="https://kinde.com/docs/developer-tools/python-sdk/"
@@ -66,21 +49,12 @@
                 {% else %}
                 <div class="js-logged-in-view">
                     <div class="card start-hero">
-                        <p class="text-body-2 start-hero-intro">Woohoo!</p>
-                        <p class="text-display-2">
-                            Your authentication is all sorted.
-                            <br />
-                            Build the important stuff.
-                        </p>
+                        <p class="text-body-2 start-hero-intro">Other Page!</p>
                     </div>
-                    <section class="next-steps-section">
-                        <h2 class="text-heading-1">Next steps for you</h2>
-                    </section>
                 </div>
                 {% endif %}
             </div>
         </main>
-
         <footer class="footer">
             <div class="container">
                 <strong class="text-heading-2">Kinde</strong>

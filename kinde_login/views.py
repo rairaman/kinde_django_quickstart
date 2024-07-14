@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.http import HttpResponseBadRequest
 
 # Import the Kinde SDK, dotenv and a few std lib modules
 import os, base64
 from kinde_sdk.kinde_api_client import GrantType, KindeApiClient
 from dotenv import load_dotenv
+import uuid
 
 # Call load_dotenv so we can access values from the .env file
 load_dotenv()
@@ -60,14 +63,27 @@ def index(request):
 
     return render(request, "kinde_login/index.html", context)
 
+def other(request):
+    context = __get_empty_context()
+
+    if request.session.get('user_id') is not None:
+        user_id = request.session.get('user_id')
+        context = __get_user_context(user_id)
+
+    return render(request, "kinde_login/other.html", context)
+
 # What gets run when you sign in
 def login(request):
     context = __get_empty_context()
 
     # Check if there's a session for this user
     if request.session.get('user_id') is None:
+        state = str(uuid.uuid4()).replace('-','')
+        request.session['login_redirect'] = request.GET.get('next', reverse('index'))
+        request.session['login_state'] = state
+
         kinde_client = __get_new_kinde_client()
-        return redirect(kinde_client.get_login_url())
+        return redirect(kinde_client.get_login_url(state=state))
     else:
         user_id = request.session.get('user_id')
         context = __get_user_context(user_id)
@@ -89,6 +105,11 @@ def register(request):
 def callback(request):
     context = __get_empty_context()
 
+    received_state = request.GET.get('state')
+
+    if received_state != request.session.get('login_state'):
+        return HttpResponseBadRequest("Invalid state")
+
     if request.session.get('user_id') is None:
 
         kinde_client = __get_new_kinde_client()
@@ -104,7 +125,14 @@ def callback(request):
             "user_last_name": user_details['family_name'],
         }
 
-        return redirect("index")
+        # Redirect to the saved URL
+        redirect_url = request.session.get('login_redirect', reverse('index'))
+        
+        # Clean up session variables
+        del request.session['login_redirect']
+        del request.session['login_state']
+
+        return redirect(redirect_url)
 
     else:
         user_id = request.session.get('user_id')

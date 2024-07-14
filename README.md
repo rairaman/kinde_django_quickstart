@@ -9,8 +9,8 @@ This quickstart repo starts a Django application with routes setup to register a
     KINDE_CLIENT_ID=123456
     KINDE_CLIENT_SECRET=AbcDef1345
     KINDE_ISSUER_URL=https://mysuperbusiness.kinde.com
-    KINDE_CALLBACK_URL=http://127.0.0.1:8000/kinde_login/callback
-    KINDE_LOGOUT_URL=http://127.0.0.1:8000/kinde_login/
+    KINDE_CALLBACK_URL=http://localhost:8000/kinde_login/callback
+    KINDE_LOGOUT_URL=http://localhost:8000/kinde_login/
     ```
 1. Add the callback URL and logout URL to your backend application in Kinde
 1. Run the Django app: `python manage.py runserver`
